@@ -26,7 +26,8 @@ def getProductions(production):
             copy_prod_list.remove(prod)
             print("After remove ",production)
         else:
-            no_match.append(prod + " | ")
+            pass
+            # no_match.append(prod + " | ")
     
     if len(similar) >= 2:
         prod_dict[start] = similar
@@ -74,12 +75,11 @@ for key, value in main_prod.items():
     get2ndProd(value, key)
 print(main_prod)
 
-
 final_production = []
 count=1
 production_list = []
 for key,values in main_prod.items():
-    final_production.append(key+'A{}'.format(count)+"|")
+    commonKey = key
     flag = 0
     for prod in values:
         if type(prod) is not str:
@@ -99,12 +99,21 @@ for key,values in main_prod.items():
                 A3=''
                 for key, value in prod.items():
                     count += 1
-                    A2 += key +"A{}".format(count)
+                    commonKey += key
+                    # A2 += key +"A{}".format(count)
                     A3 += "A{} -> ".format(count) + "| ".join(value)
-                production_list.append(A3)    
-        production_list.append(A2)
+                if A3 != '':
+                    production_list.append(A3)
+                print("A3-> ",A3)
+        if A2 != '':
+            production_list.append(A2)
+        print("A2-> ",type(A2))
+    
+    final_production.append(commonKey+'A{}'.format(count)+"|")
     count += 1
 final_production.extend(no_match)
+
+print("No match -> ",no_match )
 print("A -> ", end='')
 for item in final_production:
     print(item,end='')
